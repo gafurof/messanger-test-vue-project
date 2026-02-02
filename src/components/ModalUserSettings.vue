@@ -24,9 +24,12 @@
             <v-select :items="['men', 'women']" v-model="menOrWomen" label="avatar men women?"></v-select>
             <v-text-field hide-details="auto" label="number 1>99" v-model="newAvatar" type="number"></v-text-field>
           </v-list-item>
-          <v-list-item>
-            <v-btn prepend-icon="mdi-logout" text="Logout" @click="logout" class="ma-2" color="primary"></v-btn>
-          </v-list-item>
+          <div class="d-flex justify-space-between align-center pa-2">
+            <v-btn @click="modeTheme" class="ma-2" color="primary" :icon="darkLightMode ? 'mdi-weather-sunny' : 'mdi-weather-night'"></v-btn>
+            <v-btn class="ma-2" color="primary" prepend-icon="mdi-logout" text @click="logout">
+              Logout
+            </v-btn>
+          </div>
         </v-list>
       </v-card>
     </v-dialog>
@@ -34,10 +37,12 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useUserStore } from '@/store/user.js'
 import { useRouter } from 'vue-router'
+import { useTheme } from 'vuetify'
 
+const theme = useTheme()
 const store = useUserStore()
 const router = useRouter()
 const dialog = ref(false)
@@ -45,6 +50,20 @@ const dialog = ref(false)
 const userUid = store.currentUser.uid
 
 const user = computed(() => store.users.find(u => u.uid === userUid) || null)
+
+const darkLightMode = ref(false)
+
+function modeTheme() {
+  darkLightMode.value = !darkLightMode.value
+  if (darkLightMode.value) {
+    localStorage.setItem('theme', 'dark')
+    theme.global.name.value = 'dark'
+  }else if(darkLightMode.value === false) {
+    localStorage.setItem('theme', 'light')
+    theme.global.name.value = 'light'
+  }
+}
+
 
 const newName = ref('')
 const newAvatar = ref('')
@@ -69,6 +88,14 @@ function saveUserInfo() {
   modalUserName.value = newName.value
   modalUserAvatar.value = `https://randomuser.me/api/portraits/${menOrWomen.value}/${newAvatar.value}.jpg`
 }
+
+onMounted(() => {
+  if (localStorage.getItem("theme") === "dark") {
+    theme.global.name.value = "dark";
+  } else if (localStorage.getItem("theme") === "light") {
+    theme.global.name.value = "light";
+  }
+});
 
 function logout() {
   store.logout()

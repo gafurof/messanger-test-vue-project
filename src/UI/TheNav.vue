@@ -10,8 +10,8 @@
         </v-tabs>
       </v-toolbar>
     </v-card>
-    <v-main style="height: 91.3vh; border: none;">
-      <users-list :filterType="filterType" />
+    <v-main>
+      <users-list height="90vh" :filterType="filterType" />
     </v-main>
   </div>
 </template>

@@ -135,18 +135,20 @@ export const useUserStore = defineStore('user', {
         .catch(err => console.error(err))
     },
 
-    addFriend(userId, friendsList) {
-      fetch(`https://clone-telegram-46e49-default-rtdb.firebaseio.com/users/${userId}.json`, {
-        method: 'PUT',
+    addFriend(userId, friendUid, friendEmail, friendName, friendMessages, friendAvatar) {
+      fetch(`https://clone-telegram-46e49-default-rtdb.firebaseio.com/users/${userId}/friends.json`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          friends: friendsList,
+          uid: friendUid,
+          email: friendEmail,
+          userName: friendName,
+          messages: friendMessages,
+          avatar: friendAvatar
         })
       })
-        .then(res => res.json())
-        .catch(err => console.error(err))
     },
 
     logout() {
