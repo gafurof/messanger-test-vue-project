@@ -128,7 +128,7 @@ export const useUserStore = defineStore('user', {
         },
         body: JSON.stringify({
           userName: userName,
-          avatar  : userAvatar
+          avatar: userAvatar
         })
       })
         .then(res => res.json())

@@ -59,7 +59,7 @@ const filteredUsers = computed(() => {
   if (searchInputValue.value) {
     const search = searchInputValue.value.toLowerCase()
     users = users.filter(
-      u => u.email && u.email.toLowerCase().includes(search)
+      u => u.userName && u.userName.toLowerCase().includes(search)
     )
   }
 

@@ -25,7 +25,8 @@
             <v-text-field hide-details="auto" label="number 1>99" v-model="newAvatar" type="number"></v-text-field>
           </v-list-item>
           <div class="d-flex justify-space-between align-center pa-2">
-            <v-btn @click="modeTheme" class="ma-2" color="primary" :icon="darkLightMode ? 'mdi-weather-sunny' : 'mdi-weather-night'"></v-btn>
+            <v-btn @click="modeTheme" class="ma-2" color="primary"
+              :icon="darkLightMode ? 'mdi-weather-sunny' : 'mdi-weather-night'"></v-btn>
             <v-btn class="ma-2" color="primary" prepend-icon="mdi-logout" text @click="logout">
               Logout
             </v-btn>
@@ -58,7 +59,7 @@ function modeTheme() {
   if (darkLightMode.value) {
     localStorage.setItem('theme', 'dark')
     theme.global.name.value = 'dark'
-  }else if(darkLightMode.value === false) {
+  } else if (darkLightMode.value === false) {
     localStorage.setItem('theme', 'light')
     theme.global.name.value = 'light'
   }

@@ -2,9 +2,12 @@
   <div class="d-flex flex-column w-100">
     <v-card rounded="0">
       <v-toolbar color="primary">
-        <v-tabs align-tabs="center">
+        <v-tabs align-tabs="center" class="w-100">
           <v-tab @click="filterType = 'all'">All</v-tab>
           <v-tab @click="filterType = 'friends'">Friends</v-tab>
+
+          <v-spacer></v-spacer>
+
           <v-divider class="mx-3 align-self-center" length="24" thickness="2" vertical />
           <modal-user-settings></modal-user-settings>
         </v-tabs>
