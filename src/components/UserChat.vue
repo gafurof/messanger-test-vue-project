@@ -5,13 +5,15 @@
       <v-sheet ref="chatContainer" class="flex-grow-1 overflow-y-auto pa-4">
         <div v-for="msg in user.messages || []" :key="msg.id" class="d-flex mb-2"
           :class="msg.fromMe ? 'justify-end' : 'justify-start'">
-          <v-sheet class="pa-3 mobile" :class="msg.fromMe ? 'forMe' : 'forYou'"
-            :color="msg.fromMe ? 'primary' : 'grey-lighten-3'" :text-color="msg.fromMe ? 'white' : 'black'">
-            <div>{{ msg.text }}</div>
-            <div class="text-caption" :class="msg.fromMe ? 'text-right' : 'text-left'">
-              {{ msg.hour }}
-            </div>
-          </v-sheet>
+          <v-expand-x-transition>
+            <v-sheet class="pa-3 mobile" :class="msg.fromMe ? 'forMe' : 'forYou'"
+              :color="msg.fromMe ? 'primary' : 'grey-lighten-3'" :text-color="msg.fromMe ? 'white' : 'black'">
+              <div>{{ msg.text }}</div>
+              <div class="text-caption" :class="msg.fromMe ? 'text-right' : 'text-left'">
+                {{ msg.createdAt }}
+              </div>
+            </v-sheet>
+          </v-expand-x-transition>
         </div>
       </v-sheet>
 

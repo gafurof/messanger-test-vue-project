@@ -8,7 +8,7 @@
 
       <v-card prepend-icon="mdi-account" title="User Profile">
           <v-btn class="ma-1" color="primary" text="Add Firend" variant="tonal" @click="addFriend"></v-btn>
-          <v-btn class="ma-1" color="red" text="Remove Firend" variant="tonal" @click="addFriend"></v-btn>
+          <v-btn class="ma-1" color="red" text="Remove Firend" variant="tonal" @click="removeFriend"></v-btn>
         <v-divider></v-divider>
 
         <v-card-actions>
@@ -33,7 +33,14 @@ const dialog = ref(false)
 function addFriend() {
   const user = store.users.find(u => u.uid === store.currentUser.uid)
   const friend = store.users.find(u => u.uid === route.params.uid)
-  store.addFriend(user.id, friend.uid, friend.email, friend.userName, friend.messages, friend.avatar)
+  store.addFriend(user.id, friend.uid, friend.email, friend.userName, friend.messages, friend.avatar, friend.id)
+  dialog.value = false
+}
+
+function removeFriend() {
+  const user = store.users.find(u => u.uid === store.currentUser.uid)
+  const friend = store.users.find(u => u.uid === route.params.uid)
+  store.removeFriend(user.id, friend.uid)
   dialog.value = false
 }
 </script>

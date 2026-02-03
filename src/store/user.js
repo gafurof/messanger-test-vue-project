@@ -42,7 +42,6 @@ export const useUserStore = defineStore('user', {
           ...user,
           messages: []
         }))
-        .filter(u => u.uid !== this.currentUser?.uid)
     },
 
     setActiveChat(uid) {
@@ -79,7 +78,12 @@ export const useUserStore = defineStore('user', {
       const newMessage = {
         text: message.text,
         senderId: this.currentUser.uid,
-        createdAt: Date.now()
+        createdAt: new Date().toLocaleTimeString('ru-UZ', {
+          timeZone: 'Asia/Tashkent',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        })
       }
 
       const user = this.users.find(u => u.uid === receiverUid)
@@ -97,24 +101,36 @@ export const useUserStore = defineStore('user', {
       })
     },
 
-    async addFriend(friend) {
+    async addFriend(userId, friendUid, friendEmail, friendName, friendMessages, friendAvatar, friendId) {
       if (!this.currentUser) return
-
-      const res = await fetch(
-        `${API_USERS}/${this.currentUser.id}/friends.json`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(friend)
-        }
-      )
 
       if (!this.currentUser.friends) {
         this.currentUser.friends = []
       }
 
-      this.currentUser.friends.push(friend)
-      localStorage.setItem('user', JSON.stringify(this.currentUser))
+      await fetch(`${API_USERS}/${userId}/friends/${friendUid}.json`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: friendId,
+          uid: friendUid,
+          userName: friendName,
+          email: friendEmail,
+          avatar: friendAvatar,
+          messages: friendMessages
+        })
+      }
+      )
+
+      this.fetchUsers()
+    },
+
+    async removeFriend(userId, friendUid) {
+      await fetch(`${API_USERS}/${userId}/friends/${friendUid}.json`, {
+        method: 'DELETE',
+      })
+
+      this.fetchUsers()
     },
 
     async login(email, password) {
@@ -137,7 +153,7 @@ export const useUserStore = defineStore('user', {
       const newUser = {
         uid: res.user.uid,
         email: res.user.email,
-        userName,
+        userName: userName,
         avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
         friends: []
       }
