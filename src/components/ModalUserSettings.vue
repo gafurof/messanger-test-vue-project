@@ -11,6 +11,7 @@
           <v-toolbar-items>
             <v-btn text="Save" variant="text" @click="saveUserInfo"></v-btn>
           </v-toolbar-items>
+
         </v-toolbar>
         <v-list lines="two">
           <v-list-subheader class="w-100 d-flex align-center justify-center text-center">

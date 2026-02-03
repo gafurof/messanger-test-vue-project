@@ -5,7 +5,7 @@
       <v-sheet ref="chatContainer" class="flex-grow-1 overflow-y-auto pa-4">
         <div v-for="msg in user.messages || []" :key="msg.id" class="d-flex mb-2"
           :class="msg.fromMe ? 'justify-end' : 'justify-start'">
-          <v-sheet  class="pa-3 mobile" :class="msg.fromMe ? 'forMe' : 'forYou'"
+          <v-sheet class="pa-3 mobile" :class="msg.fromMe ? 'forMe' : 'forYou'"
             :color="msg.fromMe ? 'primary' : 'grey-lighten-3'" :text-color="msg.fromMe ? 'white' : 'black'">
             <div>{{ msg.text }}</div>
             <div class="text-caption" :class="msg.fromMe ? 'text-right' : 'text-left'">
@@ -18,7 +18,9 @@
       <v-sheet class="pa-3 d-flex align-center ga-3">
         <v-text-field v-model="newMessage" placeholder="Xabar yozing..." variant="solo" rounded="lg" hide-details
           @keyup.enter="sendMessage" />
-        <v-btn icon="mdi-send" size="large" color="primary" @click="sendMessage" />
+        <v-fade-transition>
+          <v-btn v-if="newMessage.length > 0" icon="mdi-send" size="large" color="primary" @click="sendMessage" />
+        </v-fade-transition>
       </v-sheet>
     </v-sheet>
   </div>
@@ -82,6 +84,7 @@ watch(
 .forMe {
   border-radius: 10px 10px 0px 10px;
 }
+
 .forYou {
   border-radius: 10px 10px 10px 0px;
 }
