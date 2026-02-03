@@ -17,13 +17,14 @@
         </div>
       </v-sheet>
 
-      <v-sheet class="pa-3 d-flex align-center ga-3">
+      <v-sheet class="pa-3 d-flex align-center gap-3" elevation="0" style="background-color: transparent;">
         <v-text-field v-model="newMessage" placeholder="Xabar yozing..." variant="solo" rounded="lg" hide-details
-          @keyup.enter="sendMessage" />
+          class="flex-grow-1" style="background-color: rgba(255,255,255,0.1);" @keyup.enter="sendMessage" />
         <v-fade-transition>
-          <v-btn v-if="newMessage.length > 0" icon="mdi-send" size="large" color="primary" @click="sendMessage" />
+          <v-btn v-if="newMessage.length > 0" icon="mdi-send" color="primary" @click="sendMessage" />
         </v-fade-transition>
       </v-sheet>
+
     </v-sheet>
   </div>
 
@@ -92,12 +93,14 @@ watch(
 }
 
 .mobile {
-  max-width: 40%
+  max-width: 40%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 @media screen and (max-width: 600px) {
   .mobile {
-    max-width: 75%
+    max-width: 75%;
   }
 }
 </style>

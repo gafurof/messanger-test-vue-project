@@ -1,10 +1,6 @@
 <template>
   <v-app>
-    <v-card elevation="0">
-      <v-layout>
-        <router-view></router-view>
-      </v-layout>
-    </v-card>
+    <router-view></router-view>
   </v-app>
 </template>
 
